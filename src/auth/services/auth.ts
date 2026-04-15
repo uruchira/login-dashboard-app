@@ -1,7 +1,7 @@
 import { fakeLogin, fakeLogout } from "../fakeApis";
 import type { LoginResponse } from '../../types';
 
-export async function login(
+export async function userLogin(
   username: string,
   password: string
 ): Promise<LoginResponse> {
@@ -9,7 +9,7 @@ export async function login(
   return response;
 }
 
-export async function logout(): Promise<void> {
+export async function userLogout(): Promise<boolean> {
   const response = await fakeLogout();
   return response;
 }

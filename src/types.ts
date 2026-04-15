@@ -12,5 +12,5 @@ export type LoginResponse = {
 
 export interface AuthContextType {
   user: User | null;
-  setNewUser: (loggedUser: User) => void;
+  setNewUser: (newUser: User | null) => void;
 }

@@ -1,14 +1,18 @@
-import { login } from './services/auth';
+import { useNavigate } from "react-router-dom";
+
+import { userLogin } from './services/auth';
 import { useAuth } from './AuthContext';
 
 function Login() {
   const { user, setNewUser } = useAuth();
+  const navigate = useNavigate();
 
   async function onclick() {
     try {
-      const response = await login("admin", "pwd123");
+      const response = await userLogin("admin", "pwd123");
       if (response.success) {
         if(response.user) setNewUser(response.user);
+        navigate('/dashboard');
         console.log("Welcome", response.user?.username);
       } else {
         console.log("Login failed:", response.error);
@@ -20,9 +24,8 @@ function Login() {
 
   return (
     <>
-      <section id="center">
-        {user ? `Hello ${user.username}` : <button onClick={onclick}>Login</button>}
-      </section>
+      <h1>Login</h1>
+      {user ? <p>{`Hello ${user.username}`}</p> : <button onClick={onclick}>Login</button>}
     </>
   )
 }

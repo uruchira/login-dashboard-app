@@ -29,14 +29,14 @@ export const fakeLogin = (
   });
 };
 
-export const fakeLogout = (): Promise<void> => {
+export const fakeLogout = (): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (isNetworkError) {
         reject(new Error(NETWORK_ERROR));
         return;
       }
-      resolve(); 
+      resolve(true); 
     }, networkDelay);
   });
 };
