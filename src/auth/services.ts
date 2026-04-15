@@ -1,5 +1,5 @@
-import { fakeLogin, fakeLogout } from "../fakeApis";
-import type { LoginResponse } from '../../types';
+import { fakeLogin, fakeLogout } from "./fakeApis";
+import type { LoginResponse } from '../types';
 
 export async function userLogin(
   username: string,

@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/PrivateRoute"
 
 import Login from './auth/Login';
 import Dashboard from './dashboard';
-import { useAuth } from './auth/AuthContext';
+import { useAuth } from './contexts/AuthContext';
 
 function App() {
   const { user } = useAuth();

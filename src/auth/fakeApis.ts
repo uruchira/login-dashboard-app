@@ -1,5 +1,5 @@
-import type { LoginResponse } from '../../types';
-import { isNetworkError, NETWORK_ERROR, networkDelay} from "../../constants"
+import type { LoginResponse } from '../types';
+import { isNetworkError, NETWORK_ERROR, networkDelay} from "../constants"
 
 export const fakeLogin = (
   username: string,

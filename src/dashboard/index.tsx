@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { userLogout } from '../auth/services/auth';
-import { useAuth } from '../auth/AuthContext';
+import { userLogout } from '../auth/services';
+import { useAuth } from '../contexts/AuthContext';
 
 function Dashboard() {
   const { setNewUser } = useAuth();
