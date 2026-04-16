@@ -22,3 +22,8 @@ export interface Product {
   description?: string;
   status: boolean;
 }
+
+export interface ProductContextType {
+  allProducts: Product[] | [];
+  setNewProduct: (newProduct: Product) => void;
+}
