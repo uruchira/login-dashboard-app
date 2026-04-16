@@ -1,4 +1,5 @@
-export const networkDelay = Math.random() * 1000 + 500; 
-export const isNetworkError = Math.random() < 0.02;
-
-export const NETWORK_ERROR = "Network error. Please try again."
+export const NETWORK_DELAY = 500; 
+export const USERNAME = "a@a.com"; 
+export const PASSWORD = "abc123"; 
+export const TOKEN = "fake-jwt-token"; 
+export const LOGIN_ERROR_MESSAGE = "Invalid Username or Password"; 

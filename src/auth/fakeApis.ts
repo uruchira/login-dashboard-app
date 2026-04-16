@@ -1,42 +1,33 @@
 import type { LoginResponse } from '../types';
-import { isNetworkError, NETWORK_ERROR, networkDelay} from "../constants"
+import { NETWORK_DELAY, USERNAME, PASSWORD, TOKEN, LOGIN_ERROR_MESSAGE } from "../constants"
+import { delay  } from '../utils';
 
-export const fakeLogin = (
+export const fakeLogin = async (
   username: string,
   password: string
 ): Promise<LoginResponse> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => { 
-      if (isNetworkError) {
-        reject(new Error(NETWORK_ERROR));
-        return;
-      }
-      if (username === "a@a.com" && password === "abc123") {
-        resolve({
-          success: true,
-          user: {
-            username,
-            token: "fake-jwt-token",
-          },
-        });
-      } else {
-        resolve({
-          success: false,
-          error: "Invalid username or password",
-        });
-      }
-    }, networkDelay);
+  await delay(NETWORK_DELAY);
+  return new Promise((resolve) => {
+    if (username === USERNAME && password === PASSWORD) {
+      resolve({
+        success: true,
+        user: {
+          username,
+          token: TOKEN,
+        },
+      });
+    } else {
+      resolve({
+        success: false,
+        error: LOGIN_ERROR_MESSAGE,
+      });
+    }
   });
 };
 
-export const fakeLogout = (): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (isNetworkError) {
-        reject(new Error(NETWORK_ERROR));
-        return;
-      }
-      resolve(true); 
-    }, networkDelay);
+export const fakeLogout = async (): Promise<boolean> => {
+  await delay(NETWORK_DELAY);
+  return new Promise((resolve) => {
+    resolve(true); 
   });
 };

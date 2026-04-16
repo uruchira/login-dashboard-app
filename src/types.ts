@@ -9,8 +9,16 @@ export type LoginResponse = {
   error?: string;
 };
 
-
 export interface AuthContextType {
   user: User | null;
   setNewUser: (newUser: User | null) => void;
+}
+
+export interface Product {
+  sku: string
+  price: number;
+  quantity: number;
+  category: string;
+  description?: string;
+  status: boolean;
 }
