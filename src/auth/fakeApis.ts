@@ -11,7 +11,7 @@ export const fakeLogin = (
         reject(new Error(NETWORK_ERROR));
         return;
       }
-      if (username === "admin" && password === "pwd123") {
+      if (username === "a@a.com" && password === "abc123") {
         resolve({
           success: true,
           user: {
