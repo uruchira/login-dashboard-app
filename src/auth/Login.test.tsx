@@ -69,6 +69,30 @@ describe("Login", () => {
     expect(screen.getByRole("button", { name: "Login" })).toBeEnabled();
   });
 
+  it("shows invalid email format error", () => {
+    render(<Login />);
+
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "invalid-email" },
+    });
+    fireEvent.blur(screen.getByPlaceholderText("Enter email"));
+
+    expect(screen.getByText("Invalid email address")).toBeInTheDocument();
+  });
+
+  it("shows missing password error when email is valid", () => {
+    render(<Login />);
+
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "user@example.com" },
+    });
+    fireEvent.blur(screen.getByPlaceholderText("Enter password"));
+    fireEvent.submit(screen.getByRole("button", { name: "Login" }).closest("form")!);
+
+    expect(screen.getByText("Password is required")).toBeInTheDocument();
+    expect(mockedUserLogin).not.toHaveBeenCalled();
+  });
+
   it("submits credentials and navigates to dashboard on successful login", async () => {
     const user = { username: "john", token: "token-123" };
     mockedUserLogin.mockResolvedValueOnce({ success: true, user });
