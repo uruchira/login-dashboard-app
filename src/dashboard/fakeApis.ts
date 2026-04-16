@@ -1,5 +1,5 @@
 import type { Product } from "../types";
-import { delay } from "../utils";
+import { delay, generateRandomSKU } from "../utils";
 import { NETWORK_DELAY } from "../constants";
 
 let productsDB: Product[] = [
@@ -34,13 +34,16 @@ export const getAPI = async (): Promise<Product[]> => {
   return [...productsDB];
 };
 
-export const createAPI = async (
-  product: Omit<Product, "sku">,
-): Promise<Product> => {
+export const createAPI = async (product: Product): Promise<Product> => {
   await delay(NETWORK_DELAY);
   const newProduct = {
-    sku: String(Date.now()),
-    ...product,
+    sku: generateRandomSKU(),
+    name: product.name,
+    price: product.price,
+    quantity: product.quantity,
+    category: product.category,
+    description: product.description,
+    status: product.status,
   };
   productsDB.push(newProduct);
   return newProduct;
