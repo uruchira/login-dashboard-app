@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import type { User, AuthContextType } from "../types"
+import React, { createContext, useContext, useState } from "react";
+import type { User, AuthContextType } from "../types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -8,13 +8,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const setNewUser = (newUser: User | null) => {
     setUser(newUser);
-  }
+  };
 
   return (
     <AuthContext.Provider value={{ user, setNewUser }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export const useAuth = (): AuthContextType => {

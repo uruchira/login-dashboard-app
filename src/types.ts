@@ -15,7 +15,8 @@ export interface AuthContextType {
 }
 
 export interface Product {
-  sku: string
+  sku: string;
+  name: string;
   price: number;
   quantity: number;
   category: string;

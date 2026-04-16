@@ -1,8 +1,8 @@
- import React, { useState } from "react";
- import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { userLogin } from './services';
-import { useAuth } from '../contexts/AuthContext';
+import { userLogin } from "./services";
+import { useAuth } from "../contexts/AuthContext";
 
 type FormValues = {
   email: string;
@@ -111,8 +111,8 @@ const Login: React.FC = () => {
     try {
       const response = await userLogin(values.email, values.password);
       if (response.success) {
-        if(response.user) setNewUser(response.user);
-        navigate('/dashboard');
+        if (response.user) setNewUser(response.user);
+        navigate("/dashboard");
         console.log("Welcome", response.user?.username);
       } else {
         console.log("Login failed:", response.error);
@@ -120,7 +120,7 @@ const Login: React.FC = () => {
     } catch (err: unknown) {
       console.error("Network issue:", err);
     }
-    
+
     setIsSubmitting(false);
   };
 

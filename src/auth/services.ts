@@ -1,9 +1,9 @@
 import { fakeLogin, fakeLogout } from "./fakeApis";
-import type { LoginResponse } from '../types';
+import type { LoginResponse } from "../types";
 
 export async function userLogin(
   username: string,
-  password: string
+  password: string,
 ): Promise<LoginResponse> {
   const response = await fakeLogin(username, password);
   return response;

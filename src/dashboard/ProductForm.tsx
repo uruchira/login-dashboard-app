@@ -10,7 +10,7 @@ type Product = {
 
 const iProducts: Product[] = [
   { id: "1", name: "Laptop", price: 1200, description: "HP laptop" },
-  { id: "2", name: "Phone", price: 800, description: "Smartphone" }
+  { id: "2", name: "Phone", price: 800, description: "Smartphone" },
 ];
 
 const ProductForm: React.FC = () => {
@@ -20,14 +20,16 @@ const ProductForm: React.FC = () => {
   const existingProduct = iProducts.find((p) => p.id === id);
 
   const [form, setForm] = useState<Product>(
-    existingProduct || { id: "", name: "", price: 0, description: "" }
+    existingProduct || { id: "", name: "", price: 0, description: "" },
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "price" ? Number(value) : value
+      [name]: name === "price" ? Number(value) : value,
     }));
   };
 
@@ -39,7 +41,7 @@ const ProductForm: React.FC = () => {
       console.log("update");
     } else {
       // create
-     console.log("create");
+      console.log("create");
     }
 
     navigate("/dashboard");
@@ -47,9 +49,7 @@ const ProductForm: React.FC = () => {
 
   return (
     <div>
-      <h1>
-        {existingProduct ? "Edit Product" : "Add Product"}
-      </h1>
+      <h1>{existingProduct ? "Edit Product" : "Add Product"}</h1>
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
@@ -76,9 +76,7 @@ const ProductForm: React.FC = () => {
           onChange={handleChange}
         />
 
-        <button type="submit">
-          Save
-        </button>
+        <button type="submit">Save</button>
       </form>
     </div>
   );

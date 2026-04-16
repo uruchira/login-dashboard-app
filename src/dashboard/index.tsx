@@ -1,50 +1,54 @@
-import  { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-};
-
-const initialProducts: Product[] = [
-  { id: "1", name: "Laptop", price: 1200, description: "High performance laptop" },
-  { id: "2", name: "Phone", price: 800, description: "Latest smartphone" }
-];
+import { getProducts } from "./services";
+import type { Product } from "../types";
 
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
-  if(initialProducts.length !== products.length) {
-    setProducts(initialProducts)
-  }
+  useEffect(() => {
+    async function getAllProducts() {
+      try {
+        const response = await getProducts();
+        setProducts(response);
+      } catch (err: unknown) {
+        console.error(err);
+      }
+    }
+    getAllProducts();
+  }, []);
 
   return (
     <div>
       <h1>Products</h1>
-
-      <button
-        onClick={() => navigate("/dashboard/new")}
-      >
-        Add New
-      </button>
-
-      <ul>
-        {products.map((p) => (
-          <li
-            key={p.id}
-            onClick={() => navigate(`/dashboard/${p.id}`)}
-          >
-            <h2>{p.name}</h2>
-            <p>Price: ${p.price}</p>
-            <p>{p.description}</p>
-          </li>
-        ))}
-      </ul>
+      <button onClick={() => navigate("/dashboard/new")}>Add New</button>
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((p) => (
+            <tr key={p.sku} onClick={() => navigate(`/dashboard/${p.sku}`)}>
+              <td>{p.sku}</td>
+              <td>${p.price}</td>
+              <td>{p.quantity}</td>
+              <td>{p.category}</td>
+              <td>{p.description || "-"}</td>
+              <td>{p.status ? "Active" : "Inactive"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Dashboard
+export default Dashboard;

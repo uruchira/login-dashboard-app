@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-import { userLogout } from '../auth/services';
-import { useAuth } from '../contexts/AuthContext';
+import { userLogout } from "../auth/services";
+import { useAuth } from "../contexts/AuthContext";
 
 function LogoutLink() {
   const { setNewUser } = useAuth();
@@ -13,7 +13,7 @@ function LogoutLink() {
       const response = await userLogout();
       if (response) {
         setNewUser(null);
-        navigate('/login');
+        navigate("/login");
         console.log("You're logged out");
       } else {
         console.log("Logout failed: ");
@@ -24,8 +24,10 @@ function LogoutLink() {
   }
 
   return (
-     <a href="#" onClick={handleLogout}>Logout</a>
-  )
+    <a href="#" onClick={handleLogout}>
+      Logout
+    </a>
+  );
 }
 
-export default LogoutLink
+export default LogoutLink;
