@@ -5,25 +5,25 @@ import { NETWORK_DELAY} from "../constants"
 let productsDB: Product[] = [
   { sku: "AP-AN001", price: 1000, quantity: 200, category: "AA", status: true },
   { sku: "AP-AN002",  price: 500, quantity: 100,  category: "AB", status: true },
-   { sku: "AP-AN00K",  price: 150, quantity: 10,  category: "AB", status: false },
+  { sku: "AP-AN00K",  price: 150, quantity: 10,  category: "AB", status: false },
 ];
 
-export const createProduct = async (product: Omit<Product, "id">): Promise<Product> => {
+export const getAPI = async (): Promise<Product[]> => {
+  await delay(NETWORK_DELAY);
+  return [...productsDB];
+};
+
+export const createAPI = async (product: Omit<Product, "sku">): Promise<Product> => {
   await delay(NETWORK_DELAY);
   const newProduct = {
-    id: Date.now(),
+    sku: String(Date.now()),
     ...product,
   };
   productsDB.push(newProduct);
   return newProduct;
 };
 
-export const getProducts = async (): Promise<Product[]> => {
-  await delay(NETWORK_DELAY);
-  return [...productsDB];
-};
-
-export const updateProduct = async (updatedProduct: Product): Promise<Product> => {
+export const updateAPI = async (updatedProduct: Product): Promise<Product> => {
   await delay(NETWORK_DELAY);
   const index = productsDB.findIndex(p => p.sku === updatedProduct.sku);
   if (index === -1) {
@@ -33,7 +33,7 @@ export const updateProduct = async (updatedProduct: Product): Promise<Product> =
   return updatedProduct;
 };
 
-export const deleteProduct = async (sku: string): Promise<void> => {
+export const deleteAPI = async (sku: string): Promise<void> => {
   await delay(NETWORK_DELAY);
   productsDB = productsDB.filter(p => p.sku !== sku);
 };
