@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# This is Simple Login and Dashboard Page Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is Login/Dashboard Web Application with login and logout functionality using React and TypeScript.
+The application will demonstrate component design,
+state management, form validation, authentication handling, error handling, testing, and
+documentation.
 
-Currently, two official plugins are available:
+## React + TypeScript + Vite + Vitest + RTL
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+These are the technologies that used for this application
 
-## React Compiler
+## How to Access the application
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+You can clone the project from the GitHub
 
-## Expanding the ESLint configuration
+https://github.com/uruchira/login-dashboard-app.git
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Then `cd login-dashboard-app`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Then check branch, the default branch will be `main`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## How to Install all the dependencies
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Run `npm install` to run the application in local server
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to Run the application
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Run `npm run dev` to run the application in local server http://localhost:5173/
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## How to Login to the application
+
+Enter Username: `a@a.com` Password: `abc123`
+
+## How to Run the unit tests
+
+Run `npm test` to execute the unit tests via [Vitest] https://vitest.dev
+
+## How to Build the application
+
+Run `npm build` to build the project.

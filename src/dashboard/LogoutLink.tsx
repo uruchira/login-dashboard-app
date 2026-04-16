@@ -14,7 +14,6 @@ function LogoutLink() {
       if (response) {
         setNewUser(null);
         navigate("/login");
-        console.log("You're logged out");
       } else {
         console.log("Logout failed: ");
       }

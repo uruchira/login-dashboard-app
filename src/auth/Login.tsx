@@ -113,7 +113,6 @@ const Login: React.FC = () => {
       if (response.success) {
         if (response.user) setNewUser(response.user);
         navigate("/dashboard");
-        console.log("Welcome", response.user?.username);
       } else {
         console.log("Login failed:", response.error);
       }

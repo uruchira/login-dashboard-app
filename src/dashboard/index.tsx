@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import LogoutLink from "./LogoutLink";
 import { useProducts } from "../contexts/ProductContext";
 import { getProducts } from "./services";
 import type { Product } from "../types";
@@ -24,7 +26,11 @@ const Dashboard: React.FC = () => {
 
   return (
     <div>
-      <h1>Products</h1>
+      <div className="left-right">
+        <h1>Products</h1>
+        <LogoutLink />
+      </div>
+      <br />
       <button onClick={() => navigate("/dashboard/new")}>Add New</button>
       <table>
         <thead>
@@ -39,7 +45,11 @@ const Dashboard: React.FC = () => {
         </thead>
         <tbody>
           {products.map((p) => (
-            <tr key={p.sku} onClick={() => navigate(`/dashboard/${p.sku}`)}>
+            <tr
+              key={p.sku}
+              onClick={() => navigate(`/dashboard/${p.sku}`)}
+              style={{ cursor: "pointer" }}
+            >
               <td>{p.sku}</td>
               <td>${p.price}</td>
               <td>{p.quantity}</td>

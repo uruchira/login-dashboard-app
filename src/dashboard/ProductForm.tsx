@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+
+import { addProduct, updateProduct } from "./services";
 import { useProducts } from "../contexts/ProductContext";
 import type { Product } from "../types";
 
@@ -28,19 +30,25 @@ const ProductForm: React.FC = () => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
-      [name]: name === "price" ? Number(value) : value,
+      [name]: name === "price" || name === "quantity" ? Number(value) : value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (existingProduct) {
-      // update
-      console.log("update");
+      try {
+        await updateProduct(existingProduct);
+      } catch (err: unknown) {
+        console.error("Error occured:", err);
+      }
     } else {
-      // create
-      console.log("create");
+      try {
+        await addProduct(form);
+      } catch (err: unknown) {
+        console.error("Error occured:", err);
+      }
     }
 
     navigate("/dashboard");
