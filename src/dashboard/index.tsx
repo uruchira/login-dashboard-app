@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
 import { getProducts } from "./services";
 import type { Product } from "../types";
 
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const { updateProducts } = useProducts();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,6 +14,7 @@ const Dashboard: React.FC = () => {
       try {
         const response = await getProducts();
         setProducts(response);
+        updateProducts(response);
       } catch (err: unknown) {
         console.error(err);
       }

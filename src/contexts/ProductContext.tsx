@@ -6,12 +6,16 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export function ProductProvider({ children }: { children: React.ReactNode }) {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
 
-  const setNewProduct = (newProduct: Product) => {
-    setAllProducts((prevProducts) => [...prevProducts, newProduct]);
+  const updateProducts = (newProduct: Product[] | Product) => {
+    if (Array.isArray(newProduct)) {
+      setAllProducts((prevProducts) => [...prevProducts, ...newProduct]);
+    } else {
+      setAllProducts((prevProducts) => [...prevProducts, newProduct]);
+    }
   };
 
   return (
-    <ProductContext.Provider value={{ allProducts, setNewProduct }}>
+    <ProductContext.Provider value={{ allProducts, updateProducts }}>
       {children}
     </ProductContext.Provider>
   );

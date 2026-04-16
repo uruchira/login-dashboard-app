@@ -26,5 +26,5 @@ export interface Product {
 
 export interface ProductContextType {
   allProducts: Product[] | [];
-  setNewProduct: (newProduct: Product) => void;
+  updateProducts: (newProduct: Product[] | Product) => void;
 }

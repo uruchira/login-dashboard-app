@@ -1,27 +1,26 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { useProducts } from "../contexts/ProductContext";
+import type { Product } from "../types";
 
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
+const initialState = {
+  sku: "",
+  name: "",
+  price: 0,
+  quantity: 0,
+  category: "",
+  description: "",
+  status: false,
 };
-
-const iProducts: Product[] = [
-  { id: "1", name: "Laptop", price: 1200, description: "HP laptop" },
-  { id: "2", name: "Phone", price: 800, description: "Smartphone" },
-];
 
 const ProductForm: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { allProducts } = useProducts();
 
-  const existingProduct = iProducts.find((p) => p.id === id);
+  const existingProduct = allProducts.find((p) => p.sku === id);
 
-  const [form, setForm] = useState<Product>(
-    existingProduct || { id: "", name: "", price: 0, description: "" },
-  );
+  const [form, setForm] = useState<Product>(existingProduct || initialState);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -49,33 +48,58 @@ const ProductForm: React.FC = () => {
 
   return (
     <div>
+      <Link to="/dashboard">Back to Dashboard</Link>
       <h1>{existingProduct ? "Edit Product" : "Add Product"}</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="product-form">
         <input
           name="name"
+          type="text"
           placeholder="Name"
           value={form.name}
           onChange={handleChange}
           required
         />
-
         <input
           name="price"
-          type="number"
+          type="text"
           placeholder="Price"
           value={form.price}
           onChange={handleChange}
           required
         />
-
+        <input
+          name="quantity"
+          type="number"
+          placeholder="Quantity"
+          value={form.quantity}
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="category"
+          type="text"
+          placeholder="Category"
+          value={form.category}
+          onChange={handleChange}
+          required
+        />
         <textarea
           name="description"
           placeholder="Description"
           value={form.description}
           onChange={handleChange}
         />
-
+        <input
+          id="status"
+          type="checkbox"
+          name="status"
+          checked={form.status}
+          onChange={handleChange}
+        />
+        <label htmlFor="status">Is Active</label>
+        <br />
+        <br />
         <button type="submit">Save</button>
       </form>
     </div>
