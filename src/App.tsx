@@ -1,5 +1,4 @@
-import { BrowserRouter } from "react-router";
-import { Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/PrivateRoute";
 
 import Login from "./auth/Login";

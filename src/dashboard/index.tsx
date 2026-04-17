@@ -24,8 +24,6 @@ const Dashboard: React.FC = () => {
     getAllProducts();
   }, []);
 
-  console.log(products);
-
   return (
     <div>
       <div className="left-right">
