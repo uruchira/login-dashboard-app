@@ -24,7 +24,7 @@ export async function fetchWrapper<T>(
   return response.json();
 }
 
-export function getProduct<T>(
+export function getProducts<T>(
   url: string,
   params?: Record<string, string | number>,
 ): Promise<T> {
