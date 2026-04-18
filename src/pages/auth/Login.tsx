@@ -18,27 +18,35 @@ const Login: React.FC = () => {
   const [errors, setErrors] = useState<LoginErrorState>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const validate = (fieldName: string, fieldValue: string) => {
+    let errorMessage = "";
+    if (fieldName === USERNAME) {
+      if (validator.isEmpty(fieldValue)) errorMessage = USERNAME_REQUIRED_ERROR;
+      else if (!validator.isEmail(fieldValue))
+        errorMessage = USERNAME_INVALID_ERROR;
+    }
+
+    if (fieldName === PASSWORD) {
+      if (validator.isEmpty(fieldValue)) errorMessage = PASSWORD_REQUIRED_ERROR;
+      else if (!validator.isLength(fieldValue, { min: 8 }))
+        errorMessage = PASSWORD_MIN_LENGTH_ERROR;
+    }
+    return errorMessage;
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData((prev) => ({ ...prev, [name]: value }));
+
+    const errorMessage = validate(name, value);
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let errorMsg = "";
+    const errorMessage = validate(name, value);
 
-    if (name === USERNAME) {
-      if (validator.isEmpty(value)) errorMsg = USERNAME_REQUIRED_ERROR;
-      else if (!validator.isEmail(value)) errorMsg = USERNAME_INVALID_ERROR;
-    }
-
-    if (name === PASSWORD) {
-      if (validator.isEmpty(value)) errorMsg = PASSWORD_REQUIRED_ERROR;
-      else if (!validator.isLength(value, { min: 8 }))
-        errorMsg = PASSWORD_MIN_LENGTH_ERROR;
-    }
-
-    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
   const isValid =
@@ -51,7 +59,6 @@ const Login: React.FC = () => {
     if (isValid) {
       setIsSubmitting(true);
       console.log("Form Submitted:", loginData);
-      console.log("Redirected to dashboard");
       setIsSubmitting(false);
     }
   };
@@ -82,7 +89,7 @@ const Login: React.FC = () => {
                 onBlur={handleBlur}
               />
               {errors.username && (
-                <p className="text-red-500 text-sm font-medium">
+                <p className="text-red-400 text-sm font-medium">
                   {errors.username}
                 </p>
               )}
@@ -103,7 +110,7 @@ const Login: React.FC = () => {
                 onBlur={handleBlur}
               />
               {errors.password && (
-                <p className="text-red-500 text-sm font-medium">
+                <p className="text-red-400 text-sm font-medium">
                   {errors.password}
                 </p>
               )}

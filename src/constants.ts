@@ -2,8 +2,8 @@
 export const USERNAME = "username";
 export const PASSWORD = "password";
 
-export const USERNAME_REQUIRED_ERROR = "Username is required";
-export const USERNAME_INVALID_ERROR = "Invalid username or email format";
+export const USERNAME_REQUIRED_ERROR = "Email is required";
+export const USERNAME_INVALID_ERROR = "Invalid email format";
 export const PASSWORD_REQUIRED_ERROR = "Password is required";
 export const PASSWORD_MIN_LENGTH_ERROR =
   "Password must be at least 8 characters";

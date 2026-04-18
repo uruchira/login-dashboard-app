@@ -26,6 +26,6 @@ export const FormInput = ({
       value={value}
       onChange={onChange}
     />
-    {error && <p className="text-red-500 text-sm">{error}</p>}
+    {error && <p>{error}</p>}
   </div>
 );
