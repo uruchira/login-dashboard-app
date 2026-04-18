@@ -11,7 +11,7 @@ export type LoginErrorState = {
   password?: string;
 };
 
-const LoginComponent: React.FC = () => {
+const Login: React.FC = () => {
   const [loginData, setLoginData] = useState<LoginFormState>({
     email: "",
     password: "",
@@ -127,4 +127,4 @@ const LoginComponent: React.FC = () => {
   );
 };
 
-export default LoginComponent;
+export default Login;

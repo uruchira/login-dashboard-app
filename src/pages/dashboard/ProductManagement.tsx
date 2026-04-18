@@ -47,7 +47,7 @@ const initialState: FormValues = {
   status: false,
 };
 
-function App3() {
+function ProductManagement() {
   const [productData, setProductData] = useState<FormValues>(initialState);
   const [productErrors, setProductErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -248,4 +248,4 @@ function App3() {
   );
 }
 
-export default App3;
+export default ProductManagement;
