@@ -15,7 +15,7 @@ function Dashboard() {
     }
   };
 
-  const [products] = useState<Product[]>([
+  const [products] = useState<Omit<Product, "id">[]>([
     {
       sku: "SKU001",
       productName: "Product 1",

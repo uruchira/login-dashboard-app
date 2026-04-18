@@ -1,11 +1,21 @@
 export type User = {
+  id: string;
   username: string;
-  token?: string;
+};
+
+export type LoginFormState = {
+  username: string;
+  password: string;
+};
+
+export type LoginErrorState = {
+  username?: string;
+  password?: string;
 };
 
 export type LoginResponse = {
-  success: boolean;
   user?: User;
+  success: boolean;
   error?: string;
 };
 
@@ -15,6 +25,7 @@ export interface AuthContextType {
 }
 
 export interface Product {
+  id: string;
   sku: string;
   productName: string;
   price: number;
@@ -23,6 +34,17 @@ export interface Product {
   description?: string;
   status: boolean;
 }
+
+export type ProductFormValues = Omit<Product, "id">;
+
+export type ProductFormErrors = {
+  sku?: string;
+  productName?: string;
+  price?: string;
+  quantity?: string;
+  category?: string;
+  description?: string;
+};
 
 export interface ProductContextType {
   allProducts: Product[] | [];

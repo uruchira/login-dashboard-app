@@ -1,5 +1,35 @@
+// Login Page Constants
+export const USERNAME = "username";
+export const PASSWORD = "password";
+
+export const USERNAME_REQUIRED_ERROR = "Username is required";
+export const USERNAME_INVALID_ERROR = "Invalid username or email format";
+export const PASSWORD_REQUIRED_ERROR = "Password is required";
+export const PASSWORD_MIN_LENGTH_ERROR =
+  "Password must be at least 8 characters";
+
 export const NETWORK_DELAY = 500;
-export const USERNAME = "a@a.com";
-export const PASSWORD = "abc123";
+export const SAMPLE_USER_USERNAME = "a@a.com";
+export const SAMPLE_USER_PASSWORD = "abc123";
 export const TOKEN = "fake-jwt-token";
 export const LOGIN_ERROR_MESSAGE = "Invalid Username or Password";
+
+// Dashboard Page Constants
+export const SKU = "sku";
+export const PRODUCT_NAME = "productName";
+export const PRICE = "price";
+export const QUANTITY = "quantity";
+export const CATEGORY = "category";
+export const DESCRIPTION = "description";
+export const STATUS = "status";
+
+export const SKU_REQUIRED_ERROR = "SKU is required";
+export const PRODUCT_NAME_REQUIRED_ERROR = "Product name is required";
+export const PRODUCT_NAME_LENGTH_ERROR =
+  "Product name must be at least 10 characters long";
+export const PRICE_REQUIRED_ERROR = "Price is required";
+export const PRICE_INVALID_ERROR = "Invalid price format";
+export const QUANTITY_REQUIRED_ERROR = "Quantity is required";
+export const QUANTITY_INVALID_ERROR = "Invalid quantity format";
+export const DESCRIPTION_TOO_LONG_ERROR =
+  "Description should have at most 10 characters";

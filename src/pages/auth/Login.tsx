@@ -1,19 +1,18 @@
 import React, { useState, type ChangeEvent, type FocusEvent } from "react";
 import validator from "validator";
-
-export type LoginFormState = {
-  email: string;
-  password: string;
-};
-
-export type LoginErrorState = {
-  email?: string;
-  password?: string;
-};
+import type { LoginFormState, LoginErrorState } from "../../types";
+import {
+  USERNAME,
+  PASSWORD,
+  USERNAME_REQUIRED_ERROR,
+  USERNAME_INVALID_ERROR,
+  PASSWORD_REQUIRED_ERROR,
+  PASSWORD_MIN_LENGTH_ERROR,
+} from "../../constants";
 
 const Login: React.FC = () => {
   const [loginData, setLoginData] = useState<LoginFormState>({
-    email: "",
+    username: "",
     password: "",
   });
   const [errors, setErrors] = useState<LoginErrorState>({});
@@ -28,15 +27,15 @@ const Login: React.FC = () => {
     const { name, value } = e.target;
     let errorMsg = "";
 
-    if (name === "email") {
-      if (validator.isEmpty(value)) errorMsg = "Email is required";
-      else if (!validator.isEmail(value)) errorMsg = "Invalid email format";
+    if (name === USERNAME) {
+      if (validator.isEmpty(value)) errorMsg = USERNAME_REQUIRED_ERROR;
+      else if (!validator.isEmail(value)) errorMsg = USERNAME_INVALID_ERROR;
     }
 
-    if (name === "password") {
-      if (validator.isEmpty(value)) errorMsg = "Password is required";
+    if (name === PASSWORD) {
+      if (validator.isEmpty(value)) errorMsg = PASSWORD_REQUIRED_ERROR;
       else if (!validator.isLength(value, { min: 8 }))
-        errorMsg = "Password must be at least 8 characters";
+        errorMsg = PASSWORD_MIN_LENGTH_ERROR;
     }
 
     setErrors((prev) => ({ ...prev, [name]: errorMsg }));
@@ -44,7 +43,7 @@ const Login: React.FC = () => {
 
   const isValid =
     Object.values(errors).every((err) => !err) &&
-    loginData.email &&
+    loginData.username &&
     loginData.password;
 
   const handleSubmit = (e: React.SubmitEvent) => {
@@ -76,15 +75,15 @@ const Login: React.FC = () => {
               </label>
               <input
                 type="text"
-                name="email"
+                name="username"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none"
-                value={loginData.email}
+                value={loginData.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.email && (
+              {errors.username && (
                 <p className="text-red-500 text-sm font-medium">
-                  {errors.email}
+                  {errors.username}
                 </p>
               )}
             </div>

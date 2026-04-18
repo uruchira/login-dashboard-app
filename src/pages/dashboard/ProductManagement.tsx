@@ -1,44 +1,26 @@
 import { useState, type ChangeEvent } from "react";
 import validator from "validator";
+import type { ProductFormValues, ProductFormErrors } from "../../types";
 
-export const PRODUCT_NAME = "productName";
-export const PRICE = "price";
-export const QUANTITY = "quantity";
-export const CATEGORY = "category";
-export const DESCRIPTION = "description";
-export const STATUS = "status";
+import {
+  SKU,
+  PRODUCT_NAME,
+  PRICE,
+  QUANTITY,
+  DESCRIPTION,
+  STATUS,
+  SKU_REQUIRED_ERROR,
+  PRODUCT_NAME_REQUIRED_ERROR,
+  PRODUCT_NAME_LENGTH_ERROR,
+  PRICE_REQUIRED_ERROR,
+  PRICE_INVALID_ERROR,
+  QUANTITY_REQUIRED_ERROR,
+  QUANTITY_INVALID_ERROR,
+  DESCRIPTION_TOO_LONG_ERROR,
+} from "../../constants";
 
-export const PRODUCT_NAME_REQUIRED_ERROR = "Product name is required";
-export const PRODUCT_NAME_LENGTH_ERROR =
-  "Product name must be at least 10 characters long";
-export const PRICE_REQUIRED_ERROR = "Price is required";
-export const PRICE_INVALID_ERROR = "Invalid price format";
-export const QUANTITY_REQUIRED_ERROR = "Quantity is required";
-export const QUANTITY_INVALID_ERROR = "Invalid quantity format";
-export const DESCRIPTION_TOO_LONG_ERROR =
-  "Description should have at most 10 characters";
-
-export type Product = {
-  sku: string;
-  productName: string;
-  price: number;
-  quantity: number;
-  category: string;
-  description?: string;
-  status: boolean;
-};
-
-export type FormValues = Omit<Product, "sku">;
-
-export type FormErrors = {
-  productName?: string;
-  price?: string;
-  quantity?: string;
-  category?: string;
-  description?: string;
-};
-
-const initialState: FormValues = {
+const initialState: ProductFormValues = {
+  sku: "",
   productName: "",
   price: 0,
   quantity: 0,
@@ -48,8 +30,9 @@ const initialState: FormValues = {
 };
 
 function ProductManagement() {
-  const [productData, setProductData] = useState<FormValues>(initialState);
-  const [productErrors, setProductErrors] = useState<FormErrors>({});
+  const [productData, setProductData] =
+    useState<ProductFormValues>(initialState);
+  const [productErrors, setProductErrors] = useState<ProductFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
@@ -66,6 +49,10 @@ function ProductManagement() {
   ) => {
     const { name, value } = e.target;
     let errorMsg = name === STATUS ? false : "";
+
+    if (name === SKU) {
+      if (validator.isEmpty(value)) errorMsg = SKU_REQUIRED_ERROR;
+    }
 
     if (name === PRODUCT_NAME) {
       if (validator.isEmpty(value)) errorMsg = PRODUCT_NAME_REQUIRED_ERROR;
@@ -124,6 +111,23 @@ function ProductManagement() {
           className="mt-6 mb-2 w-80 max-w-screen-lg sm:w-96"
         >
           <div className="mb-1 flex flex-col gap-6">
+            <div className="w-full max-w-sm min-w-[200px]">
+              <label className="block mb-2 text-sm text-slate-600">SKU</label>
+              <input
+                type="text"
+                name="sku"
+                className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                placeholder="SKU"
+                value={productData.sku}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {productErrors.sku && (
+                <p className="text-red-500 mt-1 text-xs font-small">
+                  {productErrors.sku}
+                </p>
+              )}
+            </div>
             <div className="w-full max-w-sm min-w-[200px]">
               <label className="block mb-2 text-sm text-slate-600">
                 Product Name
