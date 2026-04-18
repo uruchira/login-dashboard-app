@@ -10,8 +10,7 @@ export const PASSWORD_MIN_LENGTH_ERROR =
 
 export const NETWORK_DELAY = 500;
 export const SAMPLE_USER_USERNAME = "a@a.com";
-export const SAMPLE_USER_PASSWORD = "abc123";
-export const TOKEN = "fake-jwt-token";
+export const SAMPLE_USER_PASSWORD = "admin!@#";
 export const LOGIN_ERROR_MESSAGE = "Invalid Username or Password";
 
 // Dashboard Page Constants

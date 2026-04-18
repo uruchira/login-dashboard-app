@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DeleteIcon from "../../assets/delete-icon.svg";
 import type { Product } from "../../types";
+import LogoutLink from "./LogoutLink";
 
 function Dashboard() {
   const handleDelete = () => {
@@ -40,9 +41,7 @@ function Dashboard() {
     <div className="p-4 w-[70%]">
       <h4 className="block text-xl font-medium text-slate-800 mb-2">
         Products
-        <span className="ml-2 rounded-md bg-slate-800 pb-0.5 px-2.5 border border-transparent text-sm text-white">
-          Logout
-        </span>
+        <LogoutLink />
       </h4>
       <p className="text-slate-500 font-light mb-6">
         These are the products that we currently have in our database.

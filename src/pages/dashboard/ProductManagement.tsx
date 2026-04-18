@@ -18,6 +18,7 @@ import {
   QUANTITY_INVALID_ERROR,
   DESCRIPTION_TOO_LONG_ERROR,
 } from "../../constants";
+import LogoutLink from "./LogoutLink";
 
 const initialState: ProductFormValues = {
   sku: "",
@@ -99,9 +100,7 @@ function ProductManagement() {
       <div className="relative flex flex-col rounded-xl bg-transparent">
         <h4 className="block text-xl font-medium text-slate-800">
           Add New Product
-          <span className="ml-2 rounded-md bg-slate-800 pb-0.5 px-2.5 border border-transparent text-sm text-white">
-            Logout
-          </span>
+          <LogoutLink />
         </h4>
         <p className="text-slate-500 font-light">
           Please fill in the form below to create a new account.
@@ -112,9 +111,15 @@ function ProductManagement() {
         >
           <div className="mb-1 flex flex-col gap-6">
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">SKU</label>
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="sku"
+              >
+                SKU
+              </label>
               <input
                 type="text"
+                id="sku"
                 name="sku"
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="SKU"
@@ -129,11 +134,15 @@ function ProductManagement() {
               )}
             </div>
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="productName"
+              >
                 Product Name
               </label>
               <input
                 type="text"
+                id="productName"
                 name="productName"
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="Product Name"
@@ -148,9 +157,15 @@ function ProductManagement() {
               )}
             </div>
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">Price</label>
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="price"
+              >
+                Price
+              </label>
               <input
                 type="text"
+                id="price"
                 name="price"
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="Price"
@@ -165,11 +180,15 @@ function ProductManagement() {
               )}
             </div>
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="quantity"
+              >
                 Quantity
               </label>
               <input
                 type="text"
+                id="quantity"
                 name="quantity"
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="Quantity"
@@ -184,11 +203,15 @@ function ProductManagement() {
               )}
             </div>
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="category"
+              >
                 Category
               </label>
               <input
                 type="text"
+                id="category"
                 name="category"
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                 placeholder="Category"
@@ -198,10 +221,14 @@ function ProductManagement() {
               />
             </div>
             <div className="w-full max-w-sm min-w-[200px]">
-              <label className="block mb-2 text-sm text-slate-600">
+              <label
+                className="block mb-2 text-sm text-slate-600"
+                htmlFor="description"
+              >
                 Description
               </label>
               <textarea
+                id="description"
                 name="description"
                 value={productData.description}
                 className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"

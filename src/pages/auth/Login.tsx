@@ -1,5 +1,10 @@
 import React, { useState, type ChangeEvent, type FocusEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import validator from "validator";
+
+import { userLogin } from "../../services/authService";
+import { useAuth } from "../../contexts/AuthContext";
+
 import type { LoginFormState, LoginErrorState } from "../../types";
 import {
   USERNAME,
@@ -11,6 +16,9 @@ import {
 } from "../../constants";
 
 const Login: React.FC = () => {
+  const { setNewUser } = useAuth();
+  const navigate = useNavigate();
+
   const [loginData, setLoginData] = useState<LoginFormState>({
     username: "",
     password: "",
@@ -54,11 +62,24 @@ const Login: React.FC = () => {
     loginData.username &&
     loginData.password;
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (isValid) {
-      setIsSubmitting(true);
-      console.log("Form Submitted:", loginData);
+      try {
+        setIsSubmitting(true);
+        const response = await userLogin(
+          loginData.username,
+          loginData.password,
+        );
+        if (response.success) {
+          if (response.user) setNewUser(response.user);
+          navigate("/dashboard");
+        } else {
+          console.error(response.error);
+        }
+      } catch (err: unknown) {
+        console.error("Network issue:", err);
+      }
       setIsSubmitting(false);
     }
   };
@@ -76,14 +97,16 @@ const Login: React.FC = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"
-                htmlFor="email"
+                htmlFor="username"
               >
                 Email
               </label>
               <input
                 type="text"
+                id="username"
                 name="username"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+                autoComplete="off"
                 value={loginData.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -103,6 +126,7 @@ const Login: React.FC = () => {
               </label>
               <input
                 type="password"
+                id="password"
                 name="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none"
                 value={loginData.password}
