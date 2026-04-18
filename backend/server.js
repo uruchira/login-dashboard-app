@@ -1,15 +1,11 @@
+import { productData } from "./productData.js";
+
 const express = require("express");
 const app = express();
 const PORT = 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-
-// In-memory "database"
-let products = [
-  { id: 1, name: "Laptop", price: 999 },
-  { id: 2, name: "Phone", price: 499 },
-];
 
 // GET: Fetch all products
 app.get("/products", (req, res) => {
@@ -18,7 +14,7 @@ app.get("/products", (req, res) => {
 
 // GET: Fetch a single product by ID
 app.get("/products/:id", (req, res) => {
-  const product = products.find((p) => p.id === parseInt(req.params.id));
+  const product = productData.find((p) => p.id === req.params.id);
   if (!product) return res.status(404).send("Product not found");
   res.status(200).json(product);
 });
@@ -26,32 +22,32 @@ app.get("/products/:id", (req, res) => {
 // POST: Create a new product
 app.post("/products", (req, res) => {
   const newProduct = {
-    id: products.length + 1,
+    id: crypto.randomUUID(), // Generate a unique ID for the new product
     name: req.body.name,
     price: req.body.price,
   };
-  products.push(newProduct);
+  productData.push(newProduct);
   res.status(201).json(newProduct);
 });
 
 // PUT: Update an existing product
 app.put("/products/:id", (req, res) => {
-  const product = products.find((p) => p.id === parseInt(req.params.id));
-  if (!product) return res.status(404).send("Product not found");
-
-  product.name = req.body.name || product.name;
-  product.price = req.body.price || product.price;
-  res.status(200).json(product);
+  const productIndex = productData.findIndex((p) => p.id === req.params.id);
+  if (productIndex === -1) {
+    return res.status(404).send("Product not found");
+  }
+  productData[productIndex] = { ...productData[productIndex], ...req.body };
+  res.status(200).json(productData[productIndex]);
 });
 
 // DELETE: Remove a product
 app.delete("/products/:id", (req, res) => {
-  const productIndex = products.findIndex(
-    (p) => p.id === parseInt(req.params.id),
-  );
+  const productIndex = productData.findIndex((p) => p.id === req.params.id);
   if (productIndex === -1) return res.status(404).send("Product not found");
 
-  const deletedProduct = products.splice(productIndex, 1); // Use filter method
+  const deletedProduct = productData.filter(
+    (product) => product.id !== req.params.id,
+  );
   res.status(200).json(deletedProduct);
 });
 
