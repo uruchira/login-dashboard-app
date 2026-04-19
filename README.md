@@ -1,7 +1,6 @@
 # This is a Simple Login & Dashboard Pages Application
 
-This is Login/Dashboard Web Application with login and logout functionality using React and TypeScript.
-The application will demonstrate component design, state management, form validation, authentication handling, error handling, testing, and documentation.
+This is Login/Dashboard web application with login and logout functionality using React and TypeScript.
 
 ## React + TypeScript + Vite + Vitest + RTL
 
@@ -42,7 +41,7 @@ Enter, Username: `a@a.com` Password: `admin!@#`
 
 ### How to Run the unit tests
 
-Run `npm test` to execute the unit tests via [Vitest] https://vitest.dev
+Run `npm test` to execute the unit tests via Vitest https://vitest.dev
 
 ### How to Build the application
 
