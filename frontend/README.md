@@ -16,17 +16,29 @@ https://github.com/uruchira/login-dashboard-app.git
 Then `cd login-dashboard-app`
 The default branch will be `main`
 
-## How to Install all the dependencies
+## Backend
 
-Run `npm install` to install all the dependencies 
+### How to Install all the dependencies
 
-## How to Run the application
+Run `cd backend` and then `npm install` to install all the dependencies
+
+### How to Run the application
+
+Run `node server.js` to run the simple NodeJS server [http://localhost:3000]
+
+## Frontend
+
+### How to Install all the dependencies
+
+Run `cd frontend` and then `npm install` to install all the dependencies
+
+### How to Run the application
 
 Run `npm run dev` to run the application in local server [http://localhost:5173]
 
-## How to Login to the application
+### How to Login to the application
 
-Enter, Username: `a@a.com` Password: `abc123`
+Enter, Username: `a@a.com` Password: `admin!@#`
 
 ## How to Run the unit tests
 
