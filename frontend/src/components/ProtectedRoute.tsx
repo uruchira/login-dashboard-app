@@ -1,17 +1,22 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import type { User } from "../types";
 
 type ProtectedRouteProps = {
   user: User | null;
-  children: React.ReactNode;
+  redirectPath?: string;
+  children?: React.ReactNode;
 };
 
-const ProtectedRoute = ({ user, children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({
+  user,
+  redirectPath = "/login",
+  children,
+}: ProtectedRouteProps) => {
   if (!user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={redirectPath} replace />;
   }
 
-  return children;
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;

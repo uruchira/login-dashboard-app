@@ -15,30 +15,11 @@ function App() {
       <Routes>
         <Route index element={<Login />} />
         <Route path="login" element={<Login />} />
-        <Route
-          path="dashboard"
-          element={
-            <ProtectedRoute user={user}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="dashboard/new"
-          element={
-            <ProtectedRoute user={user}>
-              <ProductManagement />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="dashboard/:id"
-          element={
-            <ProtectedRoute user={user}>
-              <ProductManagement />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<ProtectedRoute user={user} />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard/new" element={<ProductManagement />} />
+          <Route path="dashboard/:id" element={<ProductManagement />} />
+        </Route>
         <Route path="*" element={<h3>The page not found</h3>} />
       </Routes>
     </BrowserRouter>
