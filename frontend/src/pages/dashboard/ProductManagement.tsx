@@ -132,7 +132,7 @@ function ProductManagement() {
         if (id) {
           await updateProduct(`/api/products/${id}`, newProduct);
         } else {
-          await addProduct("/api/products/", newProduct);
+          await addProduct("/api/products", newProduct);
         }
         navigate("/dashboard");
       } catch (err) {

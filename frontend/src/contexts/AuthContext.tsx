@@ -7,7 +7,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   const setNewUser = (newUser: User | null) => {
-    localStorage.setItem("user", JSON.stringify(newUser));
     setUser(newUser);
   };
 
