@@ -40,10 +40,10 @@ Run `npm run dev` to run the application in local server [http://localhost:5173]
 
 Enter, Username: `a@a.com` Password: `admin!@#`
 
-## How to Run the unit tests
+### How to Run the unit tests
 
 Run `npm test` to execute the unit tests via [Vitest] https://vitest.dev
 
-## How to Build the application
+### How to Build the application
 
 Run `npm build` to build the project.
