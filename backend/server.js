@@ -1,15 +1,36 @@
-import { productData } from "./productData.js";
-
 const express = require("express");
 const app = express();
 const PORT = 3000;
+
+const productData = [
+  {
+    id: "550e8400-e29b-41d4-a716-446655440000",
+    sku: "SKU001",
+    productName: "Product 1",
+    price: 100,
+    quantity: 10,
+    category: "Category 1",
+    description: "This is a description of Product 1",
+    status: true,
+  },
+  {
+    id: "550e8400-e29b-41d4-a716-446655440011",
+    sku: "SKU002",
+    productName: "Product 2",
+    price: 200,
+    quantity: 20,
+    category: "Category 2",
+    description: "",
+    status: false,
+  },
+];
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // GET: Fetch all products
 app.get("/products", (req, res) => {
-  res.status(200).json(products);
+  res.status(200).json(productData);
 });
 
 // GET: Fetch a single product by ID
