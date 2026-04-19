@@ -1,20 +1,50 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import LogoutLink from "./LogoutLink";
-import { useProducts } from "../../hooks/useProducts";
 import DeleteIcon from "../../assets/delete-icon.svg";
+import { deleteProduct, getProducts } from "../../services/dashboardService";
+import type { Product } from "../../types";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { products, loading, error } = useProducts();
-  const handleDelete = () => {
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: Product[] = await getProducts("/api/products");
+        setProducts(response);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleDelete = async (productId: string) => {
     const confirmation = window.confirm(
       "Are you sure you want to delete this product?",
     );
 
     if (confirmation) {
-      console.log("Deletion is done");
-    } else {
-      console.log("Deletion cancelled or wrong input");
+      try {
+        const deletedProductId = await deleteProduct(
+          `/api/products/${productId}`,
+        );
+        if (deletedProductId === productId) {
+          const response: Product[] = await getProducts("/api/products");
+          setProducts(response);
+        }
+      } catch (err) {
+        console.error("Error deleting product:", err);
+      }
     }
   };
 
@@ -133,7 +163,7 @@ function Dashboard() {
                   </td>
                   <td className="p-4 border-b border-blue-gray-50">
                     <span
-                      onClick={handleDelete}
+                      onClick={() => handleDelete(product.id)}
                       className="block font-sans text-sm antialiased font-medium text-blue-gray-900 flex items-center justify-center cursor-pointer"
                     >
                       <img src={DeleteIcon} alt="Delete" />

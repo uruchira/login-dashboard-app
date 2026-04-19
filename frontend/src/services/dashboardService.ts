@@ -54,7 +54,7 @@ export function updateProduct<T>(
 
 export function deleteProduct<T>(
   url: string,
-  body: Record<string, unknown>,
+  params?: Record<string, string | number>,
 ): Promise<T> {
-  return fetchWrapper<T>(url, "DELETE", { body });
+  return fetchWrapper<T>(url, "DELETE", { params });
 }

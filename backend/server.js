@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-const productData = [
+let productData = [
   {
     id: "550e8400-e29b-41d4-a716-446655440000",
     sku: "SKU001",
@@ -71,10 +71,8 @@ app.delete("/products/:id", (req, res) => {
   const productIndex = productData.findIndex((p) => p.id === req.params.id);
   if (productIndex === -1) return res.status(404).send("Product not found");
 
-  const deletedProduct = productData.filter(
-    (product) => product.id !== req.params.id,
-  );
-  res.status(200).json(deletedProduct);
+  productData = productData.filter((product) => product.id !== req.params.id);
+  res.status(200).json(req.params.id);
 });
 
 app.listen(PORT, () =>
