@@ -7,6 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 import type { LoginFormState, LoginErrorState } from "../../types";
 import {
+  DEFAULT_LOGIN_DATA,
   USERNAME,
   PASSWORD,
   USERNAME_REQUIRED_ERROR,
@@ -19,12 +20,11 @@ const Login: React.FC = () => {
   const { setNewUser } = useAuth();
   const navigate = useNavigate();
 
-  const [loginData, setLoginData] = useState<LoginFormState>({
-    username: "",
-    password: "",
-  });
+  const [loginData, setLoginData] =
+    useState<LoginFormState>(DEFAULT_LOGIN_DATA);
   const [errors, setErrors] = useState<LoginErrorState>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   const validate = (fieldName: string, fieldValue: string) => {
     let errorMessage = "";
@@ -76,9 +76,11 @@ const Login: React.FC = () => {
           navigate("/dashboard");
         } else {
           console.error(response.error);
+          setApiError(response.error || "Login failed. Please try again.");
         }
       } catch (err: unknown) {
         console.error("Network issue:", err);
+        setApiError("Network issue. Please try again.");
       }
       setIsSubmitting(false);
     }
@@ -94,6 +96,11 @@ const Login: React.FC = () => {
         </div>
         <div className="p-6">
           <form onSubmit={handleSubmit}>
+            {apiError && (
+              <p className="text-red-400 text-sm font-medium mb-4">
+                {apiError}
+              </p>
+            )}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-medium mb-2"

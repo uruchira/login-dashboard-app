@@ -1,8 +1,10 @@
 import { useState, type ChangeEvent } from "react";
 import validator from "validator";
-import type { ProductFormValues, ProductFormErrors } from "../../types";
+import LogoutLink from "./LogoutLink";
 
+import type { ProductFormValues, ProductFormErrors } from "../../types";
 import {
+  DEFAULT_PRODUCT_DATA,
   SKU,
   PRODUCT_NAME,
   PRICE,
@@ -18,39 +20,15 @@ import {
   QUANTITY_INVALID_ERROR,
   DESCRIPTION_TOO_LONG_ERROR,
 } from "../../constants";
-import LogoutLink from "./LogoutLink";
-
-const initialState: ProductFormValues = {
-  sku: "",
-  productName: "",
-  price: 0,
-  quantity: 0,
-  category: "",
-  description: "",
-  status: false,
-};
 
 function ProductManagement() {
   const [productData, setProductData] =
-    useState<ProductFormValues>(initialState);
+    useState<ProductFormValues>(DEFAULT_PRODUCT_DATA);
   const [productErrors, setProductErrors] = useState<ProductFormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    const newValue =
-      name === STATUS ? (e.target as HTMLInputElement).checked : value;
-    setProductData((prev) => ({ ...prev, [name]: newValue }));
-  };
-
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    let errorMsg = name === STATUS ? false : "";
-
+  const validate = (name: string, value: string) => {
+    let errorMsg = "";
     if (name === SKU) {
       if (validator.isEmpty(value)) errorMsg = SKU_REQUIRED_ERROR;
     }
@@ -75,21 +53,44 @@ function ProductManagement() {
       if (value && validator.isLength(value, { max: 10 }))
         errorMsg = DESCRIPTION_TOO_LONG_ERROR;
     }
+    return errorMsg;
+  };
 
-    setProductErrors((prev) => ({ ...prev, [name]: errorMsg }));
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    const newValue =
+      name === STATUS ? (e.target as HTMLInputElement).checked : value;
+    setProductData((prev) => ({ ...prev, [name]: newValue }));
+
+    const errorMessage = validate(name, value);
+    setProductErrors((prev) => ({ ...prev, [name]: errorMessage }));
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    const errorMessage = validate(name, value);
+
+    setProductErrors((prev) => ({ ...prev, [name]: errorMessage }));
   };
 
   const isValid =
-    Object.values(productErrors).every((error) => !error) &&
-    productData.productName &&
-    productData.price &&
-    productData.quantity;
+    Object.values(productErrors).every((error) => !error) && productData.sku;
+  productData.productName && productData.price && productData.quantity;
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (isValid) {
+      const newProduct = {
+        ...productData,
+        price: Number(productData.price),
+        quantity: Number(productData.quantity),
+      };
       setIsSubmitting(true);
-      console.log("Form Submitted:", productData);
+      console.log("Form Submitted:", newProduct);
       console.log("Redirected to dashboard");
       setIsSubmitting(false);
     }
