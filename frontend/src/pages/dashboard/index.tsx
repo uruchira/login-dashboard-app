@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutLink from "./LogoutLink";
 import { useProducts } from "../../hooks/useProducts";
 import DeleteIcon from "../../assets/delete-icon.svg";
@@ -23,10 +23,19 @@ function Dashboard() {
 
   return (
     <div className="p-4 w-[70%]">
-      <h4 className="block text-xl font-medium text-slate-800 mb-2">
-        Products
-        <LogoutLink />
-      </h4>
+      <div className="flex items-center justify-between mb-2">
+        <h4 className="block text-xl font-medium text-slate-800 mb-2">
+          Products
+          <LogoutLink />
+        </h4>
+        <Link
+          to={"/dashboard/new"}
+          className="text-sm text-slate-800 hover:underline"
+        >
+          Add New Product
+        </Link>
+      </div>
+
       <p className="text-slate-500 font-light mb-6">
         These are the products that we currently have in our database.
       </p>
@@ -81,7 +90,7 @@ function Dashboard() {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product.sku}>
+                <tr key={product.id}>
                   <td className="p-4 border-b border-blue-gray-50">
                     <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
                       {product.sku}

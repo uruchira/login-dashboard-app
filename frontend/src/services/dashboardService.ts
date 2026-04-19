@@ -31,6 +31,13 @@ export function getProducts<T>(
   return fetchWrapper<T>(url, "GET", { params });
 }
 
+export function getProductById<T>(
+  url: string,
+  params?: Record<string, string | number>,
+): Promise<T> {
+  return fetchWrapper<T>(url, "GET", { params });
+}
+
 export function addProduct<T>(
   url: string,
   body: Record<string, unknown>,

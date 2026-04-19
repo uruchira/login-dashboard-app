@@ -44,8 +44,13 @@ app.get("/products/:id", (req, res) => {
 app.post("/products", (req, res) => {
   const newProduct = {
     id: crypto.randomUUID(), // Generate a unique ID for the new product
-    name: req.body.name,
+    sku: req.body.sku,
+    productName: req.body.productName,
     price: req.body.price,
+    quantity: req.body.quantity,
+    category: req.body.category,
+    description: req.body.description || "",
+    status: req.body.status || false,
   };
   productData.push(newProduct);
   res.status(201).json(newProduct);

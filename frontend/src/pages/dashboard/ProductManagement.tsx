@@ -1,8 +1,13 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import validator from "validator";
 import LogoutLink from "./LogoutLink";
 
-import type { ProductFormValues, ProductFormErrors } from "../../types";
+import type {
+  ProductFormValues,
+  ProductFormErrors,
+  Product,
+} from "../../types";
 import {
   DEFAULT_PRODUCT_DATA,
   SKU,
@@ -20,12 +25,43 @@ import {
   QUANTITY_INVALID_ERROR,
   DESCRIPTION_TOO_LONG_ERROR,
 } from "../../constants";
+import { useParams } from "react-router-dom";
+import {
+  addProduct,
+  getProductById,
+  updateProduct,
+} from "../../services/dashboardService";
 
 function ProductManagement() {
   const [productData, setProductData] =
     useState<ProductFormValues>(DEFAULT_PRODUCT_DATA);
   const [productErrors, setProductErrors] = useState<ProductFormErrors>({});
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCurrentProduct = async () => {
+      try {
+        setLoading(true);
+        const response: Product = await getProductById(`/api/products/${id}`);
+        setProductData(response);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setLoading(false);
+        setError(null);
+      }
+    };
+
+    if (id) {
+      fetchCurrentProduct();
+    }
+  }, [id]);
 
   const validate = (name: string, value: string) => {
     let errorMsg = "";
@@ -81,7 +117,7 @@ function ProductManagement() {
     Object.values(productErrors).every((error) => !error) && productData.sku;
   productData.productName && productData.price && productData.quantity;
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (isValid) {
       const newProduct = {
@@ -89,18 +125,34 @@ function ProductManagement() {
         price: Number(productData.price),
         quantity: Number(productData.quantity),
       };
+
       setIsSubmitting(true);
-      console.log("Form Submitted:", newProduct);
-      console.log("Redirected to dashboard");
+      try {
+        setLoading(true);
+        if (id) {
+          await updateProduct(`/api/products/${id}`, newProduct);
+        } else {
+          await addProduct("/api/products/", newProduct);
+        }
+        navigate("/dashboard");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setLoading(false);
+        setError(null);
+      }
       setIsSubmitting(false);
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="p-4 w-[70%]">
       <div className="relative flex flex-col rounded-xl bg-transparent">
         <h4 className="block text-xl font-medium text-slate-800">
-          Add New Product
+          {id ? "Edit Product" : "Add New Product"}
           <LogoutLink />
         </h4>
         <p className="text-slate-500 font-light">
